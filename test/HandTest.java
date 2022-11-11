@@ -14,9 +14,7 @@ class HandTest {
                 new Card(CardValue.Four, CardSuit.Club),
                 new Card(CardValue.Six, CardSuit.Club)
         };
-        assertThrows(IllegalArgumentException.class, () -> {
-            Hand hand = new Hand(Arrays.asList(cards));
-        });
+        assertThrows(IllegalArgumentException.class, () -> new Hand(Arrays.asList(cards)));
     }
 
     @Test
@@ -29,9 +27,7 @@ class HandTest {
                 new Card(CardValue.Four, CardSuit.Club),
                 new Card(CardValue.Six, CardSuit.Club)
         };
-        assertThrows(IllegalArgumentException.class, () -> {
-            Hand hand = new Hand(Arrays.asList(cards));
-        });
+        assertThrows(IllegalArgumentException.class, () -> new Hand(Arrays.asList(cards)));
     }
 
     @Test

@@ -33,9 +33,7 @@ class PokerGameTest {
                 new Card(CardValue.Five, CardSuit.Diamond)
         };
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            game.initialize(Arrays.asList(cards1), Arrays.asList(cards2), "test1", "test2");
-        });
+        assertThrows(IllegalArgumentException.class, () -> game.initialize(Arrays.asList(cards1), Arrays.asList(cards2), "test1", "test2"));
     }
 
     @Test
@@ -59,7 +57,7 @@ class PokerGameTest {
 
         game.initialize(Arrays.asList(cards1), Arrays.asList(cards2), "test1", "test2");
         assert (game.getWinner().isPresent());
-        assert (game.getWinner().get().getName() == "test2");
+        assert (game.getWinner().get().getName().equals("test2"));
     }
 
     @Test
@@ -83,7 +81,7 @@ class PokerGameTest {
 
         game.initialize(Arrays.asList(cards1), Arrays.asList(cards2), "test1", "test2");
         assert (game.getWinner().isPresent());
-        assert (game.getWinner().get().getName() == "test1");
+        assert (game.getWinner().get().getName().equals("test1"));
     }
 
     @Test

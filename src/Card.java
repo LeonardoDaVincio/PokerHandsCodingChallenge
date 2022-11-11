@@ -19,13 +19,7 @@ public class Card implements Comparable<Card> {
 
     @Override
     public int compareTo(Card c) {
-        if (value.getValue() > c.value.getValue()) {
-            return 1;
-        } else if (value.getValue() < c.value.getValue()) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return Integer.compare(value.getValue(), c.value.getValue());
     }
 
     @Override

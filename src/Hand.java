@@ -1,7 +1,4 @@
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Hand {
@@ -25,13 +22,13 @@ public class Hand {
         }
         this.cards = cards;
         this.rank = getHandRank();
-        this.tieCompareOrder = getHandTieCompareOrder(this.rank, cards);
+        this.tieCompareOrder = getHandTieCompareOrder(cards);
     }
 
-    private List<CardValue> getHandTieCompareOrder(Rank rank, List<Card> cards) {
-        Map<CardValue, List<Card>> cardsGrouped = cards.stream().collect(Collectors.groupingBy(c -> c.getValue()));
-        List<List<Card>> cardsGroupedList = cardsGrouped.values().stream().collect(Collectors.toList());
-        Collections.sort(cardsGroupedList, new ListComparator<>());
+    private List<CardValue> getHandTieCompareOrder(List<Card> cards) {
+        Map<CardValue, List<Card>> cardsGrouped = cards.stream().collect(Collectors.groupingBy(Card::getValue));
+        List<List<Card>> cardsGroupedList = new ArrayList<>(cardsGrouped.values());
+        cardsGroupedList.sort(new ListComparator<>());
         List<CardValue> cardValueList = cardsGroupedList.stream().map(g -> g.get(0).getValue()).collect(Collectors.toList());
         Collections.reverse(cardValueList);
         return cardValueList;
@@ -54,16 +51,15 @@ public class Hand {
      * Prüft, ob eine Hand eine bestimmte Anzahl (m) n-letten (Dubletten, Tripletten, ...) enthält.
      * @param m Anzahl an n-letten
      * @param n Anzahl an gleichen Karten
-     * @return
+     * @return Wahr, wenn die Hand m n-letten enthält, sonst falsch
      */
     private boolean containsMNlets(int m, int n) {
-        Map<CardValue, List<Card>> cardsGrouped = cards.stream().collect(Collectors.groupingBy(c -> c.getValue()));
-        return cardsGrouped.values().stream().filter(g -> g.size() >= n).collect(Collectors.toList()).size() >= m;
+        Map<CardValue, List<Card>> cardsGrouped = cards.stream().collect(Collectors.groupingBy(Card::getValue));
+        return cardsGrouped.values().stream().filter(g -> g.size() >= n).count() >= m;
     }
 
     private boolean isStraight() {
-        List<Integer> cardNumericalValues = cards.stream().map(c -> c.getValue().getValue()).collect(Collectors.toList());
-        Collections.sort(cardNumericalValues);
+        List<Integer> cardNumericalValues = cards.stream().map(c -> c.getValue().getValue()).sorted().collect(Collectors.toList());
 
         for (int i = 0; i < cardNumericalValues.size() - 1; i++) {
             int value = cardNumericalValues.get(i);
@@ -86,21 +82,6 @@ public class Hand {
 
     private boolean isStraightFlush() {
         return isStraight() && isFlush();
-    }
-
-}
-
-class ListComparator<Card extends Comparable<Card>> implements Comparator<List<Card>> {
-
-    @Override
-    public int compare(List<Card> o1, List<Card> o2) {
-        if (o1.size() > o2.size()) {
-            return 1;
-        } else if (o1.size() < o2.size()) {
-            return -1;
-        } else {
-            return o1.get(0).compareTo(o2.get(0));
-        }
     }
 
 }
