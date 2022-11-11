@@ -32,7 +32,9 @@ public class Hand {
         Map<CardValue, List<Card>> cardsGrouped = cards.stream().collect(Collectors.groupingBy(c -> c.getValue()));
         List<List<Card>> cardsGroupedList = cardsGrouped.values().stream().collect(Collectors.toList());
         Collections.sort(cardsGroupedList, new ListComparator<>());
-        return cardsGroupedList.stream().map(g -> g.get(0).getValue()).collect(Collectors.toList());
+        List<CardValue> cardValueList = cardsGroupedList.stream().map(g -> g.get(0).getValue()).collect(Collectors.toList());
+        Collections.reverse(cardValueList);
+        return cardValueList;
     }
 
 
@@ -64,7 +66,10 @@ public class Hand {
         Collections.sort(cardNumericalValues);
 
         for (int i = 0; i < cardNumericalValues.size() - 1; i++) {
-            if (!(cardNumericalValues.get(i) == cardNumericalValues.get(i + 1) + 1)){
+            int value = cardNumericalValues.get(i);
+            int nextValue = cardNumericalValues.get(i + 1);
+
+            if (!(value + 1 == nextValue)){
                 return false;
             }
         }

@@ -1,9 +1,7 @@
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import javax.swing.text.html.Option;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -57,31 +55,31 @@ public class PokerGame {
         initializePlayers(playerOneHand, playerTwoHand, playerOneName, playerTwoName);
     }
 
-    public Player getWinner() {
+    public Optional<Player> getWinner() {
         if (playerOne.getHand().getRank().getValue() > playerTwo.getHand().getRank().getValue()) {
-            return playerOne;
+            return Optional.of(playerOne);
         } else if (playerTwo.getHand().getRank().getValue() > playerOne.getHand().getRank().getValue()) {
-            return playerTwo;
+            return Optional.of(playerTwo);
         } else {
-            Hand winningHand = resolveTie(playerOne.getHand(), playerTwo.getHand());
-            if (winningHand == playerOne.getHand()) {
-                return playerOne;
-            } else if (winningHand == playerTwo.getHand()) {
-                return playerTwo;
+            Optional<Hand> winningHand = resolveTie(playerOne.getHand(), playerTwo.getHand());
+            if (winningHand.isPresent() && winningHand.get() == playerOne.getHand()) {
+                return Optional.of(playerOne);
+            } else if (winningHand.isPresent() && winningHand.get() == playerTwo.getHand()) {
+                return Optional.of(playerTwo);
             } else {
-                throw new RuntimeException("Die 0.0087% Wahrscheinlichkeit eines tatsächlichen Gleichstands ist eingetreten.");
+                return Optional.empty();
             }
         }
     }
 
-    private Hand resolveTie(Hand handOne, Hand handTwo) {
+    private Optional<Hand> resolveTie(Hand handOne, Hand handTwo) {
         for (int i = 0; i < handOne.getTieCompareOrder().size(); i++){
             if (handOne.getTieCompareOrder().get(i).getValue() > handTwo.getTieCompareOrder().get(i).getValue()) {
-                return handOne;
+                return Optional.of(handOne);
             } else if (handOne.getTieCompareOrder().get(i).getValue() < handTwo.getTieCompareOrder().get(i).getValue()) {
-                return handTwo;
+                return Optional.of(handTwo);
             }
         }
-        throw new RuntimeException("Die 0.0087% Wahrscheinlichkeit eines tatsächlichen Gleichstands ist eingetreten.");
+        return Optional.empty();
     }
 }
