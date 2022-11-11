@@ -58,6 +58,12 @@ public class PokerGame {
     }
 
     public Player getWinner() {
-        throw new NotImplementedException();
+        if (playerOne.getHand().getRank().getValue() > playerTwo.getHand().getRank().getValue()) {
+            return playerOne;
+        } else if (playerTwo.getHand().getRank().getValue() > playerOne.getHand().getRank().getValue()) {
+            return playerTwo;
+        } else {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -4,6 +4,7 @@ public class Main {
         PokerGame game = new PokerGame();
         game.initialize("Player 1", "Player 2");
         Player winner = game.getWinner();
+        System.out.println(winner.getName());
     }
 }
 
