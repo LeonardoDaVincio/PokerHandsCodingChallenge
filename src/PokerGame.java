@@ -63,7 +63,25 @@ public class PokerGame {
         } else if (playerTwo.getHand().getRank().getValue() > playerOne.getHand().getRank().getValue()) {
             return playerTwo;
         } else {
-            throw new NotImplementedException();
+            Hand winningHand = resolveTie(playerOne.getHand(), playerTwo.getHand());
+            if (winningHand == playerOne.getHand()) {
+                return playerOne;
+            } else if (winningHand == playerTwo.getHand()) {
+                return playerTwo;
+            } else {
+                throw new RuntimeException("Die 0.0087% Wahrscheinlichkeit eines tatsächlichen Gleichstands ist eingetreten.");
+            }
         }
+    }
+
+    private Hand resolveTie(Hand handOne, Hand handTwo) {
+        for (int i = 0; i < handOne.getTieCompareOrder().size(); i++){
+            if (handOne.getTieCompareOrder().get(i).getValue() > handTwo.getTieCompareOrder().get(i).getValue()) {
+                return handOne;
+            } else if (handOne.getTieCompareOrder().get(i).getValue() < handTwo.getTieCompareOrder().get(i).getValue()) {
+                return handTwo;
+            }
+        }
+        throw new RuntimeException("Die 0.0087% Wahrscheinlichkeit eines tatsächlichen Gleichstands ist eingetreten.");
     }
 }

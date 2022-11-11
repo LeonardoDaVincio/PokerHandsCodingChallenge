@@ -1,10 +1,17 @@
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Hand {
     private final List<Card> cards;
+
+    public List<CardValue> getTieCompareOrder() {
+        return tieCompareOrder;
+    }
+
+    private final List<CardValue> tieCompareOrder;
 
     public Rank getRank() {
         return rank;
@@ -17,10 +24,19 @@ public class Hand {
             throw new IllegalArgumentException("Es müssen 5 Karten auf einer Hand sein.");
         }
         this.cards = cards;
-        rank = initializeRank();
+        this.rank = getHandRank();
+        this.tieCompareOrder = getHandTieCompareOrder(this.rank, cards);
     }
 
-    private Rank initializeRank() {
+    private List<CardValue> getHandTieCompareOrder(Rank rank, List<Card> cards) {
+        Map<CardValue, List<Card>> cardsGrouped = cards.stream().collect(Collectors.groupingBy(c -> c.getValue()));
+        List<List<Card>> cardsGroupedList = cardsGrouped.values().stream().collect(Collectors.toList());
+        Collections.sort(cardsGroupedList, new ListComparator<>());
+        return cardsGroupedList.stream().map(g -> g.get(0).getValue()).collect(Collectors.toList());
+    }
+
+
+    private Rank getHandRank() {
         if (isStraightFlush()) return Rank.StraightFlush;
         if (containsMNlets(1, 4)) return Rank.FourOfAKind;
         if (isFullHouse()) return Rank.FullHouse;
@@ -65,6 +81,21 @@ public class Hand {
 
     private boolean isStraightFlush() {
         return isStraight() && isFlush();
+    }
+
+}
+
+class ListComparator<Card extends Comparable<Card>> implements Comparator<List<Card>> {
+
+    @Override
+    public int compare(List<Card> o1, List<Card> o2) {
+        if (o1.size() > o2.size()) {
+            return 1;
+        } else if (o1.size() < o2.size()) {
+            return -1;
+        } else {
+            return o1.get(0).compareTo(o2.get(0));
+        }
     }
 
 }
