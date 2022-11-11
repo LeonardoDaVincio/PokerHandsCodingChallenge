@@ -1,3 +1,4 @@
+import java.util.Objects;
 
 public class Card implements Comparable<Card> {
     private final CardValue value;
@@ -25,6 +26,23 @@ public class Card implements Comparable<Card> {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        // self check
+        if (this == o)
+            return true;
+        // null check
+        if (o == null)
+            return false;
+        // type check and cast
+        if (getClass() != o.getClass())
+            return false;
+        Card card = (Card) o;
+        // field comparison
+        return Objects.equals(value, card.value)
+                && Objects.equals(suit, card.suit);
     }
 }
 

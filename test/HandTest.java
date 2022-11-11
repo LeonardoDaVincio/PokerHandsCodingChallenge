@@ -1,11 +1,12 @@
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HandTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_constructor_Should_Fail_TooFewCards() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -18,7 +19,7 @@ class HandTest {
         });
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_constructor_Should_Fail_TooMuchCards() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -33,7 +34,7 @@ class HandTest {
         });
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_HighCard() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -58,7 +59,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_Pair() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -81,7 +82,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_TwoPairs() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -103,7 +104,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_ThreeOfAKind() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -125,7 +126,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_Straight() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Heart),
@@ -149,7 +150,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_Flush() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Club),
@@ -173,7 +174,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_FullHouse() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Club),
@@ -194,7 +195,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_FourOfAKind() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Club),
@@ -215,7 +216,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getTieCompareOrder_For_StraightFlush() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Club),
@@ -239,7 +240,7 @@ class HandTest {
         }
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_HighCard() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -253,7 +254,7 @@ class HandTest {
         assert(hand.getRank() == Rank.HighCard);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_Pair() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -267,7 +268,7 @@ class HandTest {
         assert(hand.getRank() == Rank.Pair);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_TwoPairs() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -281,7 +282,7 @@ class HandTest {
         assert(hand.getRank() == Rank.TwoPairs);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_ThreeOfAKind() {
         Card[] cards = {
                 new Card(CardValue.Two, CardSuit.Club),
@@ -295,7 +296,7 @@ class HandTest {
         assert(hand.getRank() == Rank.ThreeOfAKind);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_Straight() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Heart),
@@ -309,7 +310,7 @@ class HandTest {
         assert(hand.getRank() == Rank.Straight);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_Flush() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Club),
@@ -323,7 +324,7 @@ class HandTest {
         assert(hand.getRank() == Rank.Flush);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_FullHouse() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Club),
@@ -337,7 +338,7 @@ class HandTest {
         assert(hand.getRank() == Rank.FullHouse);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_FourOfAKind() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Club),
@@ -351,7 +352,7 @@ class HandTest {
         assert(hand.getRank() == Rank.FourOfAKind);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void Hand_getRank_Should_StraightFlush() {
         Card[] cards = {
                 new Card(CardValue.Six, CardSuit.Club),

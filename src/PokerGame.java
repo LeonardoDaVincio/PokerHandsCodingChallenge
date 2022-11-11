@@ -11,6 +11,7 @@ public class PokerGame {
     private Stack<Card> cardStack;
     
     public PokerGame() {
+        initializeCards();
     }
 
     private void initializeCards() {
@@ -31,7 +32,7 @@ public class PokerGame {
     }
 
     public void initialize(String playerOneName, String playerTwoName) {
-        initializeCards();
+
         List<Card> tempListOne = new ArrayList<>();
         List<Card> tempListTwo = new ArrayList<>();
         for (int i=0; i < 5; i++) {
@@ -44,7 +45,6 @@ public class PokerGame {
     }
 
     public void initialize(List<Card> handOne, List<Card> handTwo, String playerOneName, String playerTwoName) {
-        initializeCards();
         for (Card card : Stream.concat(handOne.stream(), handTwo.stream()).collect(Collectors.toList())) {
             if (!cardStack.remove(card)){
                 throw new IllegalArgumentException("Unzulässige Kartenverteilung.");
@@ -81,5 +81,9 @@ public class PokerGame {
             }
         }
         return Optional.empty();
+    }
+
+    public int getCardStackSize(){
+        return cardStack.size();
     }
 }
